@@ -1,0 +1,270 @@
+
+<!DOCTYPE html>
+<html lang="tr">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Vlad AI</title>
+  <style>
+    * {
+      box-sizing: border-box;
+    }
+
+    body {
+      margin: 0;
+      padding: 25px 15px;
+      background: #101014;
+      color: white;
+      font-family: Arial, sans-serif;
+    }
+
+    .container {
+      max-width: 650px;
+      margin: auto;
+    }
+
+    h1 {
+      text-align: center;
+      color: #a78bfa;
+      letter-spacing: 4px;
+    }
+
+    .subtitle {
+      text-align: center;
+      color: #aaa;
+      margin-bottom: 30px;
+    }
+
+    .panel {
+      background: #1c1c24;
+      border: 1px solid #333;
+      border-radius: 15px;
+      padding: 20px;
+      margin-bottom: 18px;
+    }
+
+    label {
+      display: block;
+      margin: 15px 0 8px;
+      color: #ddd;
+    }
+
+    input, select, textarea {
+      width: 100%;
+      padding: 13px;
+      background: #111;
+      color: white;
+      border: 1px solid #444;
+      border-radius: 9px;
+      font-size: 15px;
+    }
+
+    input[type="file"] {
+      padding: 12px;
+    }
+
+    textarea {
+      min-height: 90px;
+      resize: vertical;
+    }
+
+    button {
+      width: 100%;
+      padding: 14px;
+      margin-top: 15px;
+      border: none;
+      border-radius: 10px;
+      background: #a78bfa;
+      color: #171320;
+      font-size: 16px;
+      font-weight: bold;
+    }
+
+    #preview {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 10px;
+      margin-top: 15px;
+    }
+
+    #preview img {
+      width: 95px;
+      height: 120px;
+      object-fit: cover;
+      border-radius: 8px;
+    }
+
+    #result {
+      white-space: pre-wrap;
+      overflow-wrap: anywhere;
+      background: #111;
+      padding: 15px;
+      border-radius: 10px;
+      min-height: 100px;
+      color: #ddd;
+    }
+
+    .hint {
+      color: #999;
+      font-size: 13px;
+      line-height: 1.5;
+    }
+  </style>
+</head>
+
+<body>
+<div class="container">
+
+  <h1>VLAD AI</h1>
+  <p class="subtitle">Your personal message assistant.</p>
+
+  <div class="panel">
+    <h3>01 — Görsel yükle</h3>
+
+    <label for="screenshots">
+      Sohbet veya profil ekran görüntüsü
+    </label>
+
+    <input
+      type="file"
+      id="screenshots"
+      accept="image/*"
+      multiple
+    >
+
+    <div id="preview"></div>
+
+    <p class="hint">
+      Birden fazla ekran görüntüsü seçebilirsin.
+    </p>
+  </div>
+
+  <div class="panel">
+    <h3>02 — Mesaj ayarları</h3>
+
+    <label>Görsel türü</label>
+    <select id="type">
+      <option>Profil</option>
+      <option>Sohbet</option>
+      <option>İkisi de</option>
+    </select>
+
+    <label>Mesaj tarzı</label>
+    <select id="style">
+      <option>Doğal ve özgüvenli</option>
+      <option>Hafif flörtöz</option>
+      <option>Esprili</option>
+      <option>Cool ve kısa</option>
+      <option>Samimi</option>
+    </select>
+
+    <label>Amacın</label>
+    <select id="goal">
+      <option>İlk mesajı atmak</option>
+      <option>Sohbeti devam ettirmek</option>
+      <option>Ortak konu bulmak</option>
+      <option>Buluşma teklif etmek</option>
+      <option>Karşılıklı ilgiyi anlamak</option>
+    </select>
+
+    <label>Benim mesajlaşma tarzım</label>
+    <textarea
+      id="myStyle"
+      placeholder="Nasıl yazdığını anlat..."
+    ></textarea>
+
+    <label>Ek bilgi</label>
+    <textarea
+      id="extra"
+      placeholder="Varsa konuşmayla ilgili ek bilgi..."
+    ></textarea>
+
+    <button onclick="generatePrompt()">
+      MESAJ ÖNERİLERİ HAZIRLA
+    </button>
+  </div>
+
+  <div class="panel">
+    <h3>03 — Hazırlanan prompt</h3>
+
+    <div id="result">
+      Henüz bir prompt oluşturulmadı.
+    </div>
+
+    <button onclick="copyPrompt()">
+      KOPYALA
+    </button>
+
+    <p class="hint">
+      Bu ilk sürüm prompt oluşturur. Gerçek yapay zekâ
+      analizi için daha sonra güvenli bir AI bağlantısı
+      ekleyeceğiz.
+    </p>
+  </div>
+
+</div>
+
+<script>
+  const screenshotInput =
+    document.getElementById("screenshots");
+
+  screenshotInput.addEventListener("change", function() {
+    const preview = document.getElementById("preview");
+    preview.innerHTML = "";
+
+    [...this.files].forEach(file => {
+      if (!file.type.startsWith("image/")) return;
+
+      const img = document.createElement("img");
+      img.src = URL.createObjectURL(file);
+      preview.appendChild(img);
+    });
+  });
+
+  function generatePrompt() {
+    const type = document.getElementById("type").value;
+    const style = document.getElementById("style").value;
+    const goal = document.getElementById("goal").value;
+    const myStyle = document.getElementById("myStyle").value;
+    const extra = document.getElementById("extra").value;
+
+    const prompt = `
+Sen benim kişisel mesaj asistanımsın.
+
+Görsel türü: ${type}
+İstenen tarz: ${style}
+Amacım: ${goal}
+
+Benim yazışma tarzım:
+${myStyle}
+
+Ek bilgi:
+${extra}
+
+Ekran görüntülerini incele ve bağlama uygun
+5 farklı mesaj önerisi hazırla.
+
+Mesajlar doğal, özgün ve yapay durmayan
+bir dilde olsun.
+
+Karşı tarafın sınırlarına saygılı ol.
+Baskıcı veya manipülatif mesajlar önerme.
+
+En doğal mesajı ayrıca belirt.
+`;
+
+    document.getElementById("result").textContent = prompt;
+  }
+
+  function copyPrompt() {
+    const text =
+      document.getElementById("result").textContent;
+
+    navigator.clipboard.writeText(text)
+      .then(() => alert("Kopyalandı!"))
+      .catch(() => alert("Metni seçip kopyalayabilirsin."));
+  }
+</script>
+
+</body>
+</html>
