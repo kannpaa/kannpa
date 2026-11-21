@@ -2,268 +2,209 @@
 <!DOCTYPE html>
 <html lang="tr">
 <head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Vlad AI</title>
-  <style>
-    * {
-      box-sizing: border-box;
-    }
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>VLAD AI</title>
 
-    body {
-      margin: 0;
-      padding: 25px 15px;
-      background: #101014;
-      color: white;
-      font-family: Arial, sans-serif;
-    }
-
-    .container {
-      max-width: 650px;
-      margin: auto;
-    }
-
-    h1 {
-      text-align: center;
-      color: #a78bfa;
-      letter-spacing: 4px;
-    }
-
-    .subtitle {
-      text-align: center;
-      color: #aaa;
-      margin-bottom: 30px;
-    }
-
-    .panel {
-      background: #1c1c24;
-      border: 1px solid #333;
-      border-radius: 15px;
-      padding: 20px;
-      margin-bottom: 18px;
-    }
-
-    label {
-      display: block;
-      margin: 15px 0 8px;
-      color: #ddd;
-    }
-
-    input, select, textarea {
-      width: 100%;
-      padding: 13px;
-      background: #111;
-      color: white;
-      border: 1px solid #444;
-      border-radius: 9px;
-      font-size: 15px;
-    }
-
-    input[type="file"] {
-      padding: 12px;
-    }
-
-    textarea {
-      min-height: 90px;
-      resize: vertical;
-    }
-
-    button {
-      width: 100%;
-      padding: 14px;
-      margin-top: 15px;
-      border: none;
-      border-radius: 10px;
-      background: #a78bfa;
-      color: #171320;
-      font-size: 16px;
-      font-weight: bold;
-    }
-
-    #preview {
-      display: flex;
-      flex-wrap: wrap;
-      gap: 10px;
-      margin-top: 15px;
-    }
-
-    #preview img {
-      width: 95px;
-      height: 120px;
-      object-fit: cover;
-      border-radius: 8px;
-    }
-
-    #result {
-      white-space: pre-wrap;
-      overflow-wrap: anywhere;
-      background: #111;
-      padding: 15px;
-      border-radius: 10px;
-      min-height: 100px;
-      color: #ddd;
-    }
-
-    .hint {
-      color: #999;
-      font-size: 13px;
-      line-height: 1.5;
-    }
-  </style>
+<style>
+*{box-sizing:border-box}
+body{
+  margin:0;
+  padding:25px 15px;
+  background:#101014;
+  color:white;
+  font-family:Arial,sans-serif
+}
+.container{max-width:650px;margin:auto}
+h1{text-align:center;color:#a78bfa;letter-spacing:4px}
+.subtitle{text-align:center;color:#aaa}
+.panel{
+  background:#1c1c24;
+  border:1px solid #333;
+  border-radius:15px;
+  padding:20px;
+  margin:20px 0
+}
+label{display:block;margin:15px 0 8px}
+input,select,textarea{
+  width:100%;
+  padding:13px;
+  background:#111;
+  color:white;
+  border:1px solid #444;
+  border-radius:9px;
+  font-size:15px
+}
+textarea{min-height:85px}
+button{
+  width:100%;
+  padding:15px;
+  margin-top:15px;
+  border:0;
+  border-radius:10px;
+  background:#a78bfa;
+  color:#171320;
+  font-weight:bold;
+  font-size:16px
+}
+#preview{display:flex;flex-wrap:wrap;gap:10px;margin-top:15px}
+#preview img{
+  width:90px;height:115px;
+  object-fit:cover;border-radius:8px
+}
+#result{
+  white-space:pre-wrap;
+  overflow-wrap:anywhere;
+  background:#111;
+  padding:15px;
+  border-radius:10px;
+  min-height:100px
+}
+.hint{color:#999;font-size:13px;line-height:1.5}
+</style>
 </head>
 
 <body>
 <div class="container">
 
-  <h1>VLAD AI</h1>
-  <p class="subtitle">Your personal message assistant.</p>
+<h1>VLAD AI</h1>
+<p class="subtitle">Your personal AI assistant.</p>
 
-  <div class="panel">
-    <h3>01 — Görsel yükle</h3>
+<div class="panel">
+<h3>01 — Görseller</h3>
 
-    <label for="screenshots">
-      Sohbet veya profil ekran görüntüsü
-    </label>
+<label for="screenshots">Fotoğraf seç</label>
+<input type="file" id="screenshots" accept="image/*" multiple>
 
-    <input
-      type="file"
-      id="screenshots"
-      accept="image/*"
-      multiple
-    >
+<div id="preview"></div>
+<p class="hint">En fazla 5 görsel seçebilirsin.</p>
+</div>
 
-    <div id="preview"></div>
+<div class="panel">
+<h3>02 — Mesaj ayarları</h3>
 
-    <p class="hint">
-      Birden fazla ekran görüntüsü seçebilirsin.
-    </p>
-  </div>
+<label>Görsel türü</label>
+<select id="type">
+<option>Profil</option>
+<option>Sohbet</option>
+<option>İkisi de</option>
+</select>
 
-  <div class="panel">
-    <h3>02 — Mesaj ayarları</h3>
+<label>Mesaj tarzı</label>
+<select id="style">
+<option>Doğal ve özgüvenli</option>
+<option>Hafif flörtöz</option>
+<option>Esprili</option>
+<option>Cool ve kısa</option>
+<option>Samimi</option>
+</select>
 
-    <label>Görsel türü</label>
-    <select id="type">
-      <option>Profil</option>
-      <option>Sohbet</option>
-      <option>İkisi de</option>
-    </select>
+<label>Amacın</label>
+<select id="goal">
+<option>İlk mesajı atmak</option>
+<option>Sohbeti devam ettirmek</option>
+<option>Ortak konu bulmak</option>
+<option>Buluşma teklif etmek</option>
+<option>Karşılıklı ilgiyi anlamak</option>
+</select>
 
-    <label>Mesaj tarzı</label>
-    <select id="style">
-      <option>Doğal ve özgüvenli</option>
-      <option>Hafif flörtöz</option>
-      <option>Esprili</option>
-      <option>Cool ve kısa</option>
-      <option>Samimi</option>
-    </select>
+<label>Benim yazışma tarzım</label>
+<textarea id="myStyle" placeholder="Örnek mesajlarını veya tarzını yaz..."></textarea>
 
-    <label>Amacın</label>
-    <select id="goal">
-      <option>İlk mesajı atmak</option>
-      <option>Sohbeti devam ettirmek</option>
-      <option>Ortak konu bulmak</option>
-      <option>Buluşma teklif etmek</option>
-      <option>Karşılıklı ilgiyi anlamak</option>
-    </select>
+<label>Ek bilgi</label>
+<textarea id="extra" placeholder="Varsa ek bilgi..."></textarea>
 
-    <label>Benim mesajlaşma tarzım</label>
-    <textarea
-      id="myStyle"
-      placeholder="Nasıl yazdığını anlat..."
-    ></textarea>
+<button id="analyze">VLAD AI İLE ANALİZ ET</button>
+</div>
 
-    <label>Ek bilgi</label>
-    <textarea
-      id="extra"
-      placeholder="Varsa konuşmayla ilgili ek bilgi..."
-    ></textarea>
-
-    <button onclick="generatePrompt()">
-      MESAJ ÖNERİLERİ HAZIRLA
-    </button>
-  </div>
-
-  <div class="panel">
-    <h3>03 — Hazırlanan prompt</h3>
-
-    <div id="result">
-      Henüz bir prompt oluşturulmadı.
-    </div>
-
-    <button onclick="copyPrompt()">
-      KOPYALA
-    </button>
-
-    <p class="hint">
-      Bu ilk sürüm prompt oluşturur. Gerçek yapay zekâ
-      analizi için daha sonra güvenli bir AI bağlantısı
-      ekleyeceğiz.
-    </p>
-  </div>
+<div class="panel">
+<h3>03 — AI Sonucu</h3>
+<div id="result">Henüz analiz yapılmadı.</div>
+</div>
 
 </div>
 
 <script>
-  const screenshotInput =
-    document.getElementById("screenshots");
+const input = document.getElementById("screenshots");
+const preview = document.getElementById("preview");
+const result = document.getElementById("result");
+const analyze = document.getElementById("analyze");
 
-  screenshotInput.addEventListener("change", function() {
-    const preview = document.getElementById("preview");
-    preview.innerHTML = "";
+let selectedImages = [];
 
-    [...this.files].forEach(file => {
-      if (!file.type.startsWith("image/")) return;
+input.addEventListener("change", () => {
+  preview.innerHTML = "";
+  selectedImages = [];
 
-      const img = document.createElement("img");
-      img.src = URL.createObjectURL(file);
-      preview.appendChild(img);
-    });
+  const files = [...input.files].slice(0, 5);
+
+  files.forEach(file => {
+    if (!file.type.startsWith("image/")) return;
+
+    const url = URL.createObjectURL(file);
+    const img = document.createElement("img");
+    img.src = url;
+    preview.appendChild(img);
+
+    selectedImages.push(file);
   });
+});
 
-  function generatePrompt() {
-    const type = document.getElementById("type").value;
-    const style = document.getElementById("style").value;
-    const goal = document.getElementById("goal").value;
-    const myStyle = document.getElementById("myStyle").value;
-    const extra = document.getElementById("extra").value;
+function fileToBase64(file) {
+  return new Promise((resolve, reject) => {
+    const reader = new FileReader();
 
-    const prompt = `
-Sen benim kişisel mesaj asistanımsın.
+    reader.onload = () => resolve(reader.result);
+    reader.onerror = reject;
 
-Görsel türü: ${type}
-İstenen tarz: ${style}
-Amacım: ${goal}
+    reader.readAsDataURL(file);
+  });
+}
 
-Benim yazışma tarzım:
-${myStyle}
-
-Ek bilgi:
-${extra}
-
-Ekran görüntülerini incele ve bağlama uygun
-5 farklı mesaj önerisi hazırla.
-
-Mesajlar doğal, özgün ve yapay durmayan
-bir dilde olsun.
-
-Karşı tarafın sınırlarına saygılı ol.
-Baskıcı veya manipülatif mesajlar önerme.
-
-En doğal mesajı ayrıca belirt.
-`;
-
-    document.getElementById("result").textContent = prompt;
+analyze.addEventListener("click", async () => {
+  if (selectedImages.length === 0) {
+    alert("Önce bir görsel seç.");
+    return;
   }
 
-  function copyPrompt() {
-    const text =
-      document.getElementById("result").textContent;
+  analyze.disabled = true;
+  analyze.textContent = "ANALİZ EDİLİYOR...";
+  result.textContent = "Vlad AI görselleri inceliyor...";
 
-    navigator.clipboard.writeText(text)
-      .then(() => alert("Kopyalandı!"))
-      .catch(() => alert("Metni seçip kopyalayabilirsin."));
+  try {
+    const images = await Promise.all(
+      selectedImages.map(fileToBase64)
+    );
+
+    const response = await fetch("/api/analyze", {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json"
+      },
+      body: JSON.stringify({
+        images,
+        style: document.getElementById("style").value,
+        goal: document.getElementById("goal").value,
+        userStyle: document.getElementById("myStyle").value,
+        extra: document.getElementById("extra").value
+      })
+    });
+
+    const data = await response.json();
+
+    if (!response.ok) {
+      throw new Error(data.error || "Bir hata oluştu.");
+    }
+
+    result.textContent = data.result;
+
+  } catch (error) {
+    result.textContent = "Hata: " + error.message;
+  } finally {
+    analyze.disabled = false;
+    analyze.textContent = "VLAD AI İLE ANALİZ ET";
   }
+});
 </script>
 
 </body>
