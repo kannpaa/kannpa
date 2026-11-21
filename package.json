@@ -1,0 +1,14 @@
+
+{
+  "name": "vlad-ai",
+  "version": "1.0.0",
+  "description": "Personal AI messaging assistant",
+  "type": "module",
+  "scripts": {
+    "start": "node server.js"
+  },
+  "dependencies": {
+    "express": "^5.1.0",
+    "openai": "^5.12.0"
+  }
+}
